@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Allow: /jobs
+Allow: /register
+Allow: /login
+
+Disallow: /manager/
+Disallow: /admin/
+Disallow: /jobseeker/
+
+Sitemap: https://frontend-xeaz.onrender.com/sitemap.xml

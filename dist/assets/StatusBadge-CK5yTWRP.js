@@ -1,0 +1,1 @@
+import{j as a}from"./react-CXIrnKA3.js";const r={APPLIED:"badge-blue",SHORTLISTED:"badge-yellow",REJECTED:"badge-red",HIRED:"badge-green"};function g({status:e}){return a.jsx("span",{className:`badge ${r[e]||"badge-gray"}`,children:e})}export{g as S};
