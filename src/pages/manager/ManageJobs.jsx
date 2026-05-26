@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useFetch, useForm } from '../../hooks/useHooks';
 import api from '../../services/api';
+import './ManageJobs.css';
 
 const emptyJob = {
   title: '',
@@ -13,11 +14,10 @@ const emptyJob = {
 
 export default function ManageJobs() {
 
-  // FETCH JOBS
   const { data, loading } = useFetch('/api/manager/jobs');
 
-  // LOCAL STATE
-  const [jobs, setJobs] = useState([]);
+  // DIRECT DATA
+  const jobs = data || [];
 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
@@ -25,12 +25,7 @@ export default function ManageJobs() {
 
   const { form, setForm, onChange, reset } = useForm(emptyJob);
 
-  // SYNC FETCHED DATA
-  useEffect(() => {
-    setJobs(data || []);
-  }, [data]);
-
-  // OPEN NEW FORM
+  // OPEN NEW
   const openNew = () => {
     reset();
     setEditingId(null);
@@ -38,7 +33,7 @@ export default function ManageJobs() {
     setError('');
   };
 
-  // OPEN EDIT FORM
+  // OPEN EDIT
   const openEdit = (job) => {
     setForm({ ...job });
     setEditingId(job.id);
@@ -46,7 +41,7 @@ export default function ManageJobs() {
     setError('');
   };
 
-  // SAVE JOB
+  // SAVE
   const handleSave = async (e) => {
 
     e.preventDefault();
@@ -60,30 +55,17 @@ export default function ManageJobs() {
           form
         );
 
-        // UPDATE UI
-        setJobs(prev =>
-          prev.map(job =>
-            job.id === editingId
-              ? { ...form, id: editingId }
-              : job
-          )
-        );
-
       } else {
 
-        const res = await api.post(
+        await api.post(
           '/api/manager/jobs',
           form
         );
-
-        // ADD NEW JOB TO UI
-        setJobs(prev => [
-          res.data,
-          ...prev
-        ]);
       }
 
       setShowForm(false);
+
+      window.location.reload();
 
     } catch (e) {
 
@@ -94,7 +76,7 @@ export default function ManageJobs() {
     }
   };
 
-  // DELETE JOB
+  // DELETE
   const handleDelete = async (id) => {
 
     if (!window.confirm(
@@ -109,10 +91,7 @@ export default function ManageJobs() {
         `/api/manager/jobs/${id}`
       );
 
-      // REMOVE FROM FRONTEND
-      setJobs(prev =>
-        prev.filter(job => job.id !== id)
-      );
+      window.location.reload();
 
     } catch (error) {
 
@@ -122,274 +101,24 @@ export default function ManageJobs() {
     }
   };
 
-  // LOADING
-  if (loading) {
-    return (
-      <div className="loading">
-        Loading jobs...
-      </div>
-    );
-  }
-
   return (
-    <div className="main-content">
 
-      {/* CSS */}
-      <style>{`
-
-        body {
-          margin: 0;
-          font-family: Arial;
-          background: linear-gradient(
-            135deg,
-            #eef2ff,
-            #f8fafc
-          );
-        }
-
-        .main-content {
-          padding: 25px;
-          max-width: 1100px;
-          margin: auto;
-        }
-
-        /* HEADER */
-
-        .header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 20px;
-        }
-
-        .page-header h1 {
-          font-size: 30px;
-          font-weight: 800;
-
-          background: linear-gradient(
-            90deg,
-            #6366f1,
-            #06b6d4,
-            #10b981
-          );
-
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-
-        .page-header p {
-          color: #6b7280;
-        }
-
-        /* BUTTONS */
-
-        .btn {
-          padding: 10px 14px;
-          border-radius: 10px;
-          border: none;
-          cursor: pointer;
-          font-weight: bold;
-          transition: 0.3s;
-        }
-
-        .btn-primary {
-          background: linear-gradient(
-            90deg,
-            #6366f1,
-            #06b6d4
-          );
-
-          color: white;
-        }
-
-        .btn-primary:hover {
-          transform: translateY(-2px);
-
-          box-shadow:
-            0 10px 20px rgba(
-              99,
-              102,
-              241,
-              0.3
-            );
-        }
-
-        .btn-outline {
-          background: white;
-          border: 1px solid #d1d5db;
-        }
-
-        .btn-danger {
-          background: linear-gradient(
-            90deg,
-            #ef4444,
-            #f97316
-          );
-
-          color: white;
-        }
-
-        .btn-sm {
-          font-size: 12px;
-          padding: 6px 10px;
-        }
-
-        /* JOB CARD */
-
-        .job-card {
-          background: white;
-          padding: 18px;
-          border-radius: 16px;
-          margin-bottom: 12px;
-
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-
-          box-shadow:
-            0 10px 25px rgba(
-              0,
-              0,
-              0,
-              0.08
-            );
-
-          transition: 0.3s;
-        }
-
-        .job-card:hover {
-          transform: translateY(-4px);
-
-          box-shadow:
-            0 15px 30px rgba(
-              99,
-              102,
-              241,
-              0.15
-            );
-        }
-
-        .job-title {
-          font-weight: 700;
-          font-size: 15px;
-        }
-
-        .job-meta {
-          font-size: 12px;
-          color: #6b7280;
-          margin-top: 4px;
-        }
-
-        .skill-tag {
-          background: linear-gradient(
-            90deg,
-            #e0e7ff,
-            #dbeafe
-          );
-
-          color: #3730a3;
-
-          padding: 4px 8px;
-
-          border-radius: 20px;
-
-          font-size: 11px;
-
-          margin-right: 5px;
-        }
-
-        /* EMPTY */
-
-        .empty {
-          text-align: center;
-          padding: 50px;
-          background: white;
-          border-radius: 16px;
-
-          box-shadow:
-            0 10px 25px rgba(
-              0,
-              0,
-              0,
-              0.05
-            );
-        }
-
-        /* MODAL */
-
-        .modal-overlay {
-          position: fixed;
-          top: 0;
-          left: 0;
-
-          width: 100%;
-          height: 100%;
-
-          background: rgba(0,0,0,0.5);
-
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .modal {
-          background: white;
-          padding: 20px;
-          border-radius: 16px;
-          width: 520px;
-
-          animation: pop 0.2s ease;
-        }
-
-        @keyframes pop {
-
-          from {
-            transform: scale(0.9);
-            opacity: 0;
-          }
-
-          to {
-            transform: scale(1);
-            opacity: 1;
-          }
-        }
-
-        input,
-        textarea,
-        select {
-
-          width: 100%;
-
-          padding: 10px;
-
-          margin-top: 6px;
-
-          border-radius: 8px;
-
-          border: 1px solid #ddd;
-        }
-
-        label {
-          font-weight: 600;
-          font-size: 13px;
-          color: #374151;
-        }
-
-        .form-group {
-          margin-bottom: 12px;
-        }
-
-      `}</style>
+    <div className="manage-jobs">
 
       {/* HEADER */}
 
       <div className="header">
 
         <div className="page-header">
+
           <h1>Job Postings</h1>
+
           <p>
-            {jobs?.length || 0} active jobs
+            {loading
+              ? 'Loading jobs...'
+              : `${jobs.length} active jobs`}
           </p>
+
         </div>
 
         <button
@@ -403,7 +132,13 @@ export default function ManageJobs() {
 
       {/* JOB LIST */}
 
-      {jobs?.length === 0 ? (
+      {loading ? (
+
+        <div className="loading">
+          Loading jobs...
+        </div>
+
+      ) : jobs.length === 0 ? (
 
         <div className="empty">
 
@@ -424,28 +159,34 @@ export default function ManageJobs() {
 
       ) : (
 
-        jobs?.map(job => (
+        jobs.map(job => (
 
           <div
             className="job-card"
             key={job.id}
           >
 
-            <div>
+            <div className="job-info">
 
               <div className="job-title">
                 {job.title}
               </div>
 
               <div className="job-meta">
+
                 📍 {job.location}
-                {' · '}
+
+                <span>·</span>
+
                 💰 {job.salary}
-                {' · '}
+
+                <span>·</span>
+
                 🕒 {job.jobType}
+
               </div>
 
-              <div style={{ marginTop: 6 }}>
+              <div className="skills">
 
                 {job.skills
                   ?.split(',')
@@ -464,12 +205,7 @@ export default function ManageJobs() {
 
             </div>
 
-            <div
-              style={{
-                display: 'flex',
-                gap: 8
-              }}
-            >
+            <div className="actions">
 
               <button
                 className="btn btn-outline btn-sm"
@@ -513,7 +249,7 @@ export default function ManageJobs() {
             </h2>
 
             {error && (
-              <p style={{ color: 'red' }}>
+              <p className="error">
                 {error}
               </p>
             )}
@@ -521,6 +257,7 @@ export default function ManageJobs() {
             <form onSubmit={handleSave}>
 
               <div className="form-group">
+
                 <label>Title</label>
 
                 <input
@@ -529,9 +266,11 @@ export default function ManageJobs() {
                   onChange={onChange}
                   required
                 />
+
               </div>
 
               <div className="form-group">
+
                 <label>Location</label>
 
                 <input
@@ -539,9 +278,11 @@ export default function ManageJobs() {
                   value={form.location}
                   onChange={onChange}
                 />
+
               </div>
 
               <div className="form-group">
+
                 <label>Salary</label>
 
                 <input
@@ -549,9 +290,11 @@ export default function ManageJobs() {
                   value={form.salary}
                   onChange={onChange}
                 />
+
               </div>
 
               <div className="form-group">
+
                 <label>Job Type</label>
 
                 <select
@@ -564,9 +307,11 @@ export default function ManageJobs() {
                   <option>Internship</option>
                   <option>Contract</option>
                 </select>
+
               </div>
 
               <div className="form-group">
+
                 <label>Skills</label>
 
                 <input
@@ -574,9 +319,11 @@ export default function ManageJobs() {
                   value={form.skills}
                   onChange={onChange}
                 />
+
               </div>
 
               <div className="form-group">
+
                 <label>Description</label>
 
                 <textarea
@@ -585,6 +332,7 @@ export default function ManageJobs() {
                   onChange={onChange}
                   rows={4}
                 />
+
               </div>
 
               <button
