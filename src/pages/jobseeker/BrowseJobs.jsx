@@ -48,7 +48,7 @@ export default function BrowseJobs() {
         }}
         onFocusCapture={e => e.currentTarget.style.borderColor = 'var(--naukri-blue-dark)'}
         onBlurCapture={e => e.currentTarget.style.borderColor = 'var(--gray-200)'}>
-          <span style={{ color: 'var(--gray-400)', marginRight: 8, fontSize: 16 }}>🔍</span>
+          <span style={{ color: '#9A3412', marginRight: 8, fontSize: 16 }}>🔍</span>
           <input
             value={keyword}
             onChange={e => setKeyword(e.target.value)}
