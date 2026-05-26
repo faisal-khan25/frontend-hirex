@@ -6,6 +6,6 @@ Allow: /login
 
 Disallow: /manager/
 Disallow: /admin/
-Disallow: /jobseeker/
+Allow: /jobseeker/
 
 Sitemap: https://frontend-xeaz.onrender.com/sitemap.xml
