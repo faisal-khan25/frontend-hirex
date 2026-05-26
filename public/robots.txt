@@ -4,8 +4,8 @@ Allow: /jobs
 Allow: /register
 Allow: /login
 
-Disallow: /manager/
+Allow: /manager/
 Disallow: /admin/
-Disallow: /jobseeker/
+Allow: /jobseeker/
 
 Sitemap: https://frontend-xeaz.onrender.com/sitemap.xml
