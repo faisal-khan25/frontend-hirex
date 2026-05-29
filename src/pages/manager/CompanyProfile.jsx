@@ -157,16 +157,20 @@ export default function CompanyProfile() {
 
             <div className="form-group">
 
-              <label>
-                Company Name
-              </label>
+             <label htmlFor="name">
+                Company Name *
+            </label>
 
-              <input
-                name="name"
-                value={form.name}
-                onChange={onChange}
-                required
-              />
+   
+   
+ <input
+    id="name"
+    name="name"
+    value={form.name}
+    onChange={onChange}
+    required
+  />
+              
 
             </div>
 
@@ -174,25 +178,27 @@ export default function CompanyProfile() {
 
               <div className="form-group">
 
-                <label>
-                  Industry
-                </label>
+                 <label htmlFor="industry">
+    Industry
+  </label>
 
-                <input
-                  name="industry"
-                  value={form.industry}
-                  onChange={onChange}
-                />
+  <input
+    id="industry"
+    name="industry"
+    value={form.industry}
+    onChange={onChange}
+  />
 
               </div>
 
               <div className="form-group">
 
-                <label>
+                <label htmlFor='Location'>
                   Location
                 </label>
 
                 <input
+                 id="Location"
                   name="location"
                   value={form.location}
                   onChange={onChange}
@@ -206,11 +212,12 @@ export default function CompanyProfile() {
 
               <div className="form-group">
 
-                <label>
+                <label htmlFor='Website'>
                   Website
                 </label>
 
                 <input
+                 id='website'
                   name="website"
                   value={form.website}
                   onChange={onChange}
@@ -220,11 +227,12 @@ export default function CompanyProfile() {
 
               <div className="form-group">
 
-                <label>
+                <label htmlFor='Team Size'>
                   Team Size
                 </label>
 
                 <input
+                 id='team-size'
                   type="number"
                   name="size"
                   value={form.size}
@@ -237,11 +245,12 @@ export default function CompanyProfile() {
 
             <div className="form-group">
 
-              <label>
+              <label htmlFor='Logo URL'>
                 Logo URL
               </label>
 
               <input
+               id='Logo-URL'
                 name="logoUrl"
                 value={form.logoUrl}
                 onChange={onChange}
@@ -251,11 +260,12 @@ export default function CompanyProfile() {
 
             <div className="form-group">
 
-              <label>
+              <label htmlFor='About-company'>
                 About Company
               </label>
 
               <textarea
+              id='about-company'
                 name="description"
                 value={form.description}
                 onChange={onChange}

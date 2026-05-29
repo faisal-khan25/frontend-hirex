@@ -1,30 +1,59 @@
 import { useFetch } from '../../hooks/useHooks';
 import StatusBadge from '../../components/common/StatusBadge';
+import './MyApplications.css';
 
 export default function MyApplications() {
   const { data: apps, loading } = useFetch('/api/jobseeker/applications');
 
-  if (loading) return <div className="loading">Loading applications...</div>;
+  if (loading) {
+    return (
+      <div className="loading">
+        Loading applications...
+      </div>
+    );
+  }
 
   return (
     <div className="main-content">
+
+      {/* Header */}
       <div className="page-header">
         <h1>My Applications</h1>
-        <p>Track all your job applications in one place</p>
+
+        <p>
+          Track all your job applications in one place
+        </p>
       </div>
 
+      {/* Empty State */}
       {apps?.length === 0 && (
+
         <div className="empty">
-          <div style={{ fontSize: 48, marginBottom: 12 }}>📋</div>
-          <div style={{ fontWeight: 600, color: 'var(--gray-600)', marginBottom: 6 }}>No applications yet</div>
-          <div style={{ fontSize: 13 }}>Browse jobs and start applying to see them here.</div>
+
+          <div className="empty-icon">
+            📋
+          </div>
+
+          <div className="empty-title">
+            No applications yet
+          </div>
+
+          <div className="empty-subtitle">
+            Browse jobs and start applying to see them here.
+          </div>
+
         </div>
       )}
 
+      {/* Applications Table */}
       {apps?.length > 0 && (
-        <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+
+        <div className="card applications-card">
+
           <div className="table-wrap">
-            <table>
+
+            <table className="applications-table">
+
               <thead>
                 <tr>
                   <th>Job Title</th>
@@ -33,24 +62,53 @@ export default function MyApplications() {
                   <th>Status</th>
                 </tr>
               </thead>
+
               <tbody>
-                {apps.map(app => (
+
+                {apps.map((app) => (
+
                   <tr key={app.id}>
-                    <td style={{ fontWeight: 600, color: 'var(--brand-blue)' }}>{app.jobTitle}</td>
-                    <td style={{ color: 'var(--gray-600)' }}>{app.companyName}</td>
-                    <td style={{ color: 'var(--gray-400)', fontSize: 13 }}>
-                      {app.appliedAt ? new Date(app.appliedAt).toLocaleDateString('en-IN', {
-                        day: 'numeric', month: 'short', year: 'numeric'
-                      }) : '-'}
+
+                    <td className="job-title-cell">
+                      {app.jobTitle}
                     </td>
-                    <td><StatusBadge status={app.status} /></td>
+
+                    <td className="company-cell">
+                      {app.companyName}
+                    </td>
+
+                    <td className="date-cell">
+
+                      {app.appliedAt
+                        ? new Date(app.appliedAt).toLocaleDateString(
+                            'en-IN',
+                            {
+                              day: 'numeric',
+                              month: 'short',
+                              year: 'numeric'
+                            }
+                          )
+                        : '-'}
+
+                    </td>
+
+                    <td>
+                      <StatusBadge status={app.status} />
+                    </td>
+
                   </tr>
+
                 ))}
+
               </tbody>
+
             </table>
+
           </div>
+
         </div>
       )}
+
     </div>
   );
 }

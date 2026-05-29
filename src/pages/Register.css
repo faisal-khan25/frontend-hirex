@@ -1,0 +1,216 @@
+/* PAGE */
+.register-page {
+  min-height: calc(100vh - 52px);
+  background: #f1f4f9;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 14px 40px;
+}
+
+/* CARD */
+.register-card {
+  width: 100%;
+  max-width: 940px;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+}
+
+/* LEFT PANEL */
+.register-left-panel {
+  background: linear-gradient(135deg, #f0f4ff, #e8f0fe);
+  padding: 48px 32px;
+  width: 300px;
+  border-right: 1px solid var(--gray-200);
+}
+
+.left-icon {
+  font-size: 60px;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.left-box-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.left-benefits p {
+  font-size: 13px;
+  margin-bottom: 12px;
+  color: var(--gray-700);
+}
+
+/* RIGHT PANEL */
+.register-right-panel {
+  flex: 1;
+  padding: 28px 20px;
+}
+
+/* MOBILE BENEFITS */
+.mobile-benefits {
+  display: none;
+  background: var(--naukri-blue-light);
+  padding: 12px 14px;
+  border-radius: 10px;
+  margin-bottom: 18px;
+}
+
+.mobile-title {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.mobile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 10px;
+  font-size: 12px;
+}
+
+/* LOGIN LINK */
+.login-link {
+  text-align: right;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: var(--gray-500);
+}
+
+.login-link a {
+  color: var(--naukri-blue-dark);
+  font-weight: 600;
+}
+
+/* TITLES */
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--gray-500);
+  margin-bottom: 18px;
+}
+
+/* ROLE TOGGLE */
+.role-toggle {
+  display: flex;
+  background: var(--gray-100);
+  border-radius: 8px;
+  padding: 4px;
+  margin-bottom: 18px;
+}
+
+.role-btn {
+  flex: 1;
+  text-align: center;
+  padding: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 6px;
+  color: var(--gray-500);
+}
+
+.role-btn input {
+  display: none;
+}
+
+.role-btn.active {
+  background: white;
+  color: var(--naukri-orange);
+  box-shadow: var(--shadow-sm);
+}
+
+/* PHONE */
+.phone-box {
+  display: flex;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.country-code {
+  padding: 10px 12px;
+  background: var(--gray-50);
+  border-right: 1px solid var(--gray-200);
+  font-weight: 600;
+}
+
+/* BUTTONS */
+.full-btn {
+  width: 100%;
+  margin-top: 6px;
+}
+
+.google-btn {
+  width: 100%;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 24px;
+  padding: 10px;
+  margin-top: 10px;
+  background: transparent;
+  font-weight: 600;
+}
+
+/* DIVIDER */
+.divider {
+  text-align: center;
+  margin: 16px 0;
+  position: relative;
+}
+
+.divider span {
+  background: white;
+  padding: 0 12px;
+  position: relative;
+  z-index: 1;
+  font-size: 12px;
+  color: var(--gray-400);
+}
+
+/* TERMS */
+.terms {
+  text-align: center;
+  margin-top: 14px;
+  font-size: 11px;
+  color: var(--gray-400);
+}
+
+.terms span {
+  color: var(--naukri-blue-dark);
+  cursor: pointer;
+}
+
+/* RESPONSIVE */
+@media (min-width: 700px) {
+  .register-card {
+    flex-direction: row;
+  }
+
+  .register-left-panel {
+    display: block;
+  }
+
+  .register-right-panel {
+    padding: 40px 36px;
+  }
+}
+
+@media (max-width: 699px) {
+  .register-left-panel {
+    display: none;
+  }
+
+  .mobile-benefits {
+    display: block;
+  }
+}

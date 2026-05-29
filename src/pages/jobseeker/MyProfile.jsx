@@ -1,6 +1,7 @@
-import { useState, useEffect, useCallback, memo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useFetch, useForm } from '../../hooks/useHooks';
 import api from '../../services/api';
+import './MyProfile.css';
 
 const initialForm = {
   skills: '',
@@ -20,7 +21,6 @@ function MyProfile() {
 
   const { form, setForm, onChange } = useForm(initialForm);
 
-  // Optimized profile update
   useEffect(() => {
     if (profile) {
       setForm({
@@ -34,7 +34,6 @@ function MyProfile() {
     }
   }, [profile, setForm]);
 
-  // Optimized submit handler
   const handleSave = useCallback(async (e) => {
     e.preventDefault();
 
@@ -52,20 +51,10 @@ function MyProfile() {
     }
   }, [form]);
 
-  // Lightweight loading UI
   if (loading) {
     return (
       <div className="main-content">
-        <div
-          className="card"
-          style={{
-            maxWidth: 620,
-            minHeight: 300,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
+        <div className="card profile-loading-card">
           <p>Loading profile...</p>
         </div>
       </div>
@@ -73,85 +62,74 @@ function MyProfile() {
   }
 
   return (
-    <div className="main-content">
+    <div className="main-content" style={{ overflowAnchor: 'none' }}>
+
+      {/* Header */}
       <header className="page-header">
         <h1>My Profile</h1>
+
         <p>
           Keep your profile updated to get better job recommendations
         </p>
       </header>
 
-      <section
-        className="card"
-        style={{
-          maxWidth: 620,
-          contain: 'content',
-        }}
-      >
-        {/* Lightweight profile info */}
-        <div
-          style={{
-            background: 'var(--brand-blue-light)',
-            borderRadius: 'var(--radius)',
-            padding: '12px 16px',
-            marginBottom: 20,
-            display: 'flex',
-            alignItems: 'flex-start',
-            gap: 10,
-          }}
-        >
+      {/* Card */}
+      <section className="card profile-card">
+
+        {/* Info Box */}
+        <div className="profile-info-box">
+
           <span
             aria-hidden="true"
-            style={{ fontSize: 18, lineHeight: 1 }}
+            className="profile-info-icon"
           >
             💡
           </span>
 
           <div>
-            <div
-              style={{
-                fontSize: 13,
-                fontWeight: 600,
-                color: 'var(--brand-blue)',
-              }}
-            >
+
+            <div className="profile-info-title">
               Complete your profile
             </div>
 
-            <div
-              style={{
-                fontSize: 12,
-                color: '#1f2937',
-              }}
-            >
+            <div className="profile-info-text">
               Profiles with all fields filled get 3x more views
             </div>
+
           </div>
+
         </div>
 
+        {/* Success */}
         {success && (
-          <div className="alert alert-success" role="alert">
+          <div
+            className="alert alert-success"
+            role="alert"
+          >
             {success}
           </div>
         )}
 
+        {/* Error */}
         {error && (
-          <div className="alert alert-error" role="alert">
+          <div
+            className="alert alert-error"
+            role="alert"
+          >
             {error}
           </div>
         )}
 
+        {/* Form */}
         <form onSubmit={handleSave}>
+
+          {/* Skills */}
           <div className="form-group">
+
             <label htmlFor="skills">
-              Skills{' '}
-              <span
-                style={{
-                  color: '#4b5563',
-                  fontWeight: 400,
-                  fontSize: 12,
-                }}
-              >
+              Skills
+
+              <span className="label-note">
                 (comma separated)
               </span>
             </label>
@@ -164,11 +142,17 @@ function MyProfile() {
               placeholder="React, Java, MySQL"
               autoComplete="off"
             />
+
           </div>
 
+          {/* Grid */}
           <div className="grid-2">
+
             <div className="form-group">
-              <label htmlFor="experience">Experience</label>
+
+              <label htmlFor="experience">
+                Experience
+              </label>
 
               <input
                 id="experience"
@@ -178,10 +162,14 @@ function MyProfile() {
                 placeholder="2 years"
                 autoComplete="off"
               />
+
             </div>
 
             <div className="form-group">
-              <label htmlFor="location">Location</label>
+
+              <label htmlFor="location">
+                Location
+              </label>
 
               <input
                 id="location"
@@ -191,11 +179,17 @@ function MyProfile() {
                 placeholder="Hyderabad, India"
                 autoComplete="address-level2"
               />
+
             </div>
+
           </div>
 
+          {/* Education */}
           <div className="form-group">
-            <label htmlFor="education">Education</label>
+
+            <label htmlFor="education">
+              Education
+            </label>
 
             <input
               id="education"
@@ -205,10 +199,15 @@ function MyProfile() {
               placeholder="B.Tech Computer Science"
               autoComplete="organization-title"
             />
+
           </div>
 
+          {/* Resume */}
           <div className="form-group">
-            <label htmlFor="resumeUrl">Resume URL</label>
+
+            <label htmlFor="resumeUrl">
+              Resume URL
+            </label>
 
             <input
               id="resumeUrl"
@@ -218,10 +217,15 @@ function MyProfile() {
               placeholder="https://drive.google.com/..."
               inputMode="url"
             />
+
           </div>
 
+          {/* Bio */}
           <div className="form-group">
-            <label htmlFor="bio">About Me</label>
+
+            <label htmlFor="bio">
+              About Me
+            </label>
 
             <textarea
               id="bio"
@@ -231,19 +235,24 @@ function MyProfile() {
               placeholder="A brief summary about yourself..."
               rows={4}
             />
+
           </div>
 
+          {/* Button */}
           <button
             type="submit"
-            className="btn btn-primary"
+            className="btn btn-primary save-btn"
             disabled={saving}
           >
             {saving ? 'Saving...' : 'Save Profile'}
           </button>
+
         </form>
+
       </section>
+
     </div>
   );
 }
 
-export default memo(MyProfile);
+export default MyProfile;
